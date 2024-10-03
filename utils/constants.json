@@ -1,0 +1,12 @@
+{
+  "student_route": "/student",
+  "class_route": "/class",
+  "teacher_route": "/teacher",
+  "created": "created",
+  "success": "success",
+  "updated": "updated",
+  "record_Created": "Record created successfully",
+  "record_Updated": "Record updated successfully",
+  "record_Deleted": "Record deleted successfully",
+  "record_Not_Found": "Record not found"
+}

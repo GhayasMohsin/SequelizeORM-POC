@@ -1,10 +1,14 @@
+"use-strict";
 const ClassRepositry = require("../../../repositries/class");
 const { sendResponse } = require("../../../utils/response");
-const constants = require("../../../utils/constants.json");
+const Constants = require("../../../utils/constants.json");
+const ErrorConstants = require("../../../utils/errors.json");
+const SharedService = require("../../../shared/service");
 
 class ClassService {
   constructor() {
-    this.repositry = new ClassRepositry();
+    this.classRepositry = new ClassRepositry();
+    this.sharedService = new SharedService();
   }
 
   /**
@@ -13,13 +17,22 @@ class ClassService {
    * @param {*} res
    */
   async addClass(req, res) {
-    let data = req.body;
-    let recordId = (await this.repositry.createClass(data)).id;
+    const data = req.body;
+
+    if (data.teacherId) {
+      const exists = await this.sharedService.isTeacherExists(data.teacherId);
+      if (!exists)
+        return sendResponse(res, 404, null, ErrorConstants.TEACHER_NOT_FOUND);
+    }
+
+    let record = await this.classRepositry.createClass(data);
+    data.teacherId ? await record.addTeacher(data.teacherId) : null;
+    let recordId = record.id;
     sendResponse(
       res,
       201,
-      constants.created,
-      constants.record_Created,
+      Constants.created,
+      Constants.record_Created,
       null,
       recordId
     );
@@ -33,8 +46,8 @@ class ClassService {
   async updateClass(req, res) {
     let id = req.query.id;
     let data = req.body;
-    await this.repositry.updateClass(id, data);
-    sendResponse(res, 200, constants.updated, constants.record_Updated);
+    await this.classRepositry.updateClass(id, data);
+    sendResponse(res, 200, Constants.updated, Constants.record_Updated);
   }
 
   /**
@@ -43,8 +56,8 @@ class ClassService {
    * @param {*} res
    */
   async getAllClasses(req, res) {
-    let records = await this.repositry.getAllClasss();
-    sendResponse(res, 200, constants.success, null, records);
+    let records = await this.classRepositry.getAllClasss();
+    sendResponse(res, 200, Constants.success, null, records);
   }
 
   /**
@@ -54,12 +67,12 @@ class ClassService {
    */
   async deleteClass(req, res) {
     let id = req.query.id;
-    let result = await this.repositry.deleteClass(id);
+    let result = await this.classRepositry.deleteClass(id);
     sendResponse(
       res,
       200,
-      constants.success,
-      result ? constants.record_Deleted : constants.record_Not_Found
+      Constants.success,
+      result ? Constants.record_Deleted : Constants.record_Not_Found
     );
   }
 }

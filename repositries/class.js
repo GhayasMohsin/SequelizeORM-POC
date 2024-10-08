@@ -13,6 +13,10 @@ class ClassRepositry {
     return this.class.findAll();
   }
 
+  async getClassById(id) {
+    return this.class.findOne({ where: { id } });
+  }
+
   async deleteClass(id) {
     return this.class.destroy({ where: { id } });
   }

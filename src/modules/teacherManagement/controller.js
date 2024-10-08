@@ -13,6 +13,10 @@ router.get("/get_teachers", (req, res) => {
   service.getAllTeachers(req, res);
 });
 
+router.get("/get_students_by_teacherId", (req, res) => {
+  service.getStudentsByTeacher(req, res);
+});
+
 router.delete("/delete_teacher", (req, res) => {
   service.deleteTeacher(req, res);
 });

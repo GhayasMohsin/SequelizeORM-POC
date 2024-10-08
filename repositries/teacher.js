@@ -13,6 +13,10 @@ class TeacherRepositry {
     return this.teacher.findAll();
   }
 
+  async getTeacherById(id) {
+    return this.teacher.findOne({ where: { id } });
+  }
+
   async deleteTeacher(id) {
     return this.teacher.destroy({ where: { id } });
   }

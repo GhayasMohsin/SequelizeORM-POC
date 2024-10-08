@@ -1,29 +1,29 @@
-const db = require("../models");
+const model = require("../models").Student;
 
-class StudentRepositry {
-  constructor() {
-    this.student = db.Student;
-  }
-
-  async createStudent(data) {
-    return this.student.create(data);
-  }
-
-  async getAllStudents() {
-    return this.student.findAll();
-  }
-
-  async getStudentById(id) {
-    return this.student.findOne({ where: { id }, include: "Teacher" });
-  }
-
-  async deleteStudent(id) {
-    return this.student.destroy({ where: { id } });
-  }
-
-  async updateStudent(id, data) {
-    return this.student.update(data, { where: { id } });
-  }
+async function createStudent(data) {
+  return model.create(data);
 }
 
-module.exports = StudentRepositry;
+async function getAllStudents() {
+  return model.findAll();
+}
+
+async function getStudentById(id) {
+  return model.findOne({ where: { id }, include: "Teacher" });
+}
+
+async function deleteStudent(id) {
+  return model.destroy({ where: { id } });
+}
+
+async function updateStudent(id, data) {
+  return model.update(data, { where: { id } });
+}
+
+module.exports = {
+  createStudent,
+  getAllStudents,
+  getStudentById,
+  deleteStudent,
+  updateStudent,
+};

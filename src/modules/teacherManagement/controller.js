@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const service = new (require("./service"))();
+const service = require("./service");
 
 router.post("/add_teacher", (req, res) => {
   service.addTeacher(req, res);

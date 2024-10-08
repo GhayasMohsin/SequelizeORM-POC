@@ -1,29 +1,29 @@
-const db = require("../models");
+const model = require("../models").Class;
 
-class ClassRepositry {
-  constructor() {
-    this.class = db.Class;
-  }
-
-  async createClass(data) {
-    return this.class.create(data);
-  }
-
-  async getAllClasss() {
-    return this.class.findAll();
-  }
-
-  async getClassById(id) {
-    return this.class.findOne({ where: { id } });
-  }
-
-  async deleteClass(id) {
-    return this.class.destroy({ where: { id } });
-  }
-
-  async updateClass(id, data) {
-    return this.class.update(data, { where: { id } });
-  }
+async function createClass(data) {
+  return model.create(data);
 }
 
-module.exports = ClassRepositry;
+async function getAllClasss() {
+  return model.findAll();
+}
+
+async function getClassById(id) {
+  return model.findOne({ where: { id } });
+}
+
+async function deleteClass(id) {
+  return model.destroy({ where: { id } });
+}
+
+async function updateClass(id, data) {
+  return model.update(data, { where: { id } });
+}
+
+module.exports = {
+  createClass,
+  getAllClasss,
+  getClassById,
+  deleteClass,
+  updateClass,
+};

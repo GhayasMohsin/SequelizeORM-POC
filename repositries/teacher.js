@@ -1,29 +1,29 @@
-const db = require("../models");
+const model = require("../models").Teacher;
 
-class TeacherRepositry {
-  constructor() {
-    this.teacher = db.Teacher;
-  }
-
-  async createTeacher(data) {
-    return this.teacher.create(data);
-  }
-
-  async getAllTeachers() {
-    return this.teacher.findAll();
-  }
-
-  async getTeacherById(id) {
-    return this.teacher.findOne({ where: { id } });
-  }
-
-  async deleteTeacher(id) {
-    return this.teacher.destroy({ where: { id } });
-  }
-
-  async updateTeacher(id, data) {
-    return this.teacher.update(data, { where: { id } });
-  }
+async function createTeacher(data) {
+  return model.create(data);
 }
 
-module.exports = TeacherRepositry;
+async function getAllTeachers() {
+  return model.findAll();
+}
+
+async function getTeacherById(id) {
+  return model.findOne({ where: { id } });
+}
+
+async function deleteTeacher(id) {
+  return model.destroy({ where: { id } });
+}
+
+async function updateTeacher(id, data) {
+  return model.update(data, { where: { id } });
+}
+
+module.exports = {
+  createTeacher,
+  getAllTeachers,
+  getTeacherById,
+  deleteTeacher,
+  updateTeacher,
+};
